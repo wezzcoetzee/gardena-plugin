@@ -16,7 +16,7 @@ sequenceDiagram
     participant H as Home app
     participant P as Plugin (Homebridge host)
     participant G as Gardena device
-    P->>G: Scan for Gardena adverts (company id 0x0426)
+    P->>G: Scan for Gardena adverts (company id 0x0426 or Gardena service UUID)
     loop every pollInterval
         P->>G: Connect, read valve state, remaining time, battery
         P-->>H: Update tile

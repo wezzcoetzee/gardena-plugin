@@ -29,11 +29,18 @@ export const GattUuid = {
 
 export type GattUuid = (typeof GattUuid)[keyof typeof GattUuid];
 
-/** Gardena advertises its Bluetooth SIG company id as the manufacturer data prefix. */
-export const isGardenaAdvertisement = (manufacturerData: Buffer | undefined) =>
-  manufacturerData !== undefined &&
-  manufacturerData.length >= 2 &&
-  manufacturerData.readUInt16LE(0) === GARDENA_COMPANY_ID;
+/**
+ * Gardena puts its Bluetooth SIG company id in the manufacturer data, but that often arrives in the
+ * scan response, which weak signals lose. The primary advert carries a Gardena service UUID, so accept either.
+ */
+export const isGardenaAdvertisement = (advertisement: { manufacturerData?: Buffer; serviceUuids?: string[] }) => {
+  const { manufacturerData, serviceUuids = [] } = advertisement;
+  const hasCompanyId =
+    manufacturerData !== undefined &&
+    manufacturerData.length >= 2 &&
+    manufacturerData.readUInt16LE(0) === GARDENA_COMPANY_ID;
+  return hasCompanyId || serviceUuids.some((uuid) => /^98bd[0-9a-f]{4}0b0e421a84e5ddbf75dc6de4$/i.test(uuid));
+};
 
 export const decodeBool = (data: Buffer) => data.length > 0 && data[0] !== 0;
 

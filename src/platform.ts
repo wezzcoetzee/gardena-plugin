@@ -94,10 +94,10 @@ export class GardenaPlatform implements DynamicPlatformPlugin {
   }
 
   private onDiscover(peripheral: Peripheral) {
-    if (!isGardenaAdvertisement(peripheral.advertisement.manufacturerData)) return;
-
     const keys = [peripheral.address, peripheral.id].filter(Boolean).map(normalizeAddress);
     const key = keys.find((candidate) => this.pending.has(candidate));
+    // A configured address is trusted even if this advert lacks the Gardena markers.
+    if (!key && !isGardenaAdvertisement(peripheral.advertisement)) return;
 
     if (!this.reported.has(peripheral.id)) {
       this.reported.add(peripheral.id);

@@ -25,8 +25,13 @@ describe('protocol', () => {
   });
 
   it('recognises Gardena manufacturer data by company id', () => {
-    expect(isGardenaAdvertisement(Buffer.from([0x26, 0x04, 0x02, 0x05, 0x01]))).toBe(true);
-    expect(isGardenaAdvertisement(Buffer.from([0x4c, 0x00]))).toBe(false);
-    expect(isGardenaAdvertisement(undefined)).toBe(false);
+    expect(isGardenaAdvertisement({ manufacturerData: Buffer.from([0x26, 0x04, 0x02, 0x05, 0x01]) })).toBe(true);
+    expect(isGardenaAdvertisement({ manufacturerData: Buffer.from([0x4c, 0x00]) })).toBe(false);
+    expect(isGardenaAdvertisement({})).toBe(false);
+  });
+
+  it('recognises a Gardena service uuid when manufacturer data is missing', () => {
+    expect(isGardenaAdvertisement({ serviceUuids: ['98bd00010b0e421a84e5ddbf75dc6de4'] })).toBe(true);
+    expect(isGardenaAdvertisement({ serviceUuids: ['180f'] })).toBe(false);
   });
 });

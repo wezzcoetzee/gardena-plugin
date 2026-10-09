@@ -1,0 +1,40 @@
+{
+  "name": "homebridge-gardena-bluetooth",
+  "displayName": "Gardena Bluetooth",
+  "version": "0.1.0",
+  "description": "Control Gardena Bluetooth water controls and irrigation valves from HomeKit.",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "config.schema.json"
+  ],
+  "keywords": [
+    "homebridge-plugin",
+    "gardena",
+    "bluetooth",
+    "irrigation",
+    "valve"
+  ],
+  "engines": {
+    "homebridge": "^1.8.0 || ^2.0.0",
+    "node": "^22.10.0 || ^24.0.0 || ^26.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && homebridge -U ./dev -P . -I -D",
+    "test": "tsc -p tsconfig.test.json && vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@stoprocent/noble": "^2.8.0"
+  },
+  "devDependencies": {
+    "@homebridge/hap-nodejs": "^2.2.2",
+    "@types/node": "^22.20.5",
+    "homebridge": "^2.4.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
+}

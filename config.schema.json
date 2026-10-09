@@ -1,0 +1,43 @@
+{
+  "pluginAlias": "GardenaBluetooth",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Leave devices empty and restart to log the addresses of nearby Gardena devices. Make sure the Gardena app is closed and Bluetooth is off on your phone, or the device may refuse the connection.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": { "title": "Name", "type": "string", "default": "Gardena Bluetooth", "required": true },
+      "pollInterval": {
+        "title": "Poll interval (seconds)",
+        "type": "integer",
+        "default": 60,
+        "minimum": 15,
+        "description": "How often to read state and battery. Longer is kinder to the batteries."
+      },
+      "devices": {
+        "title": "Devices",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "title": "Bluetooth address",
+              "type": "string",
+              "required": true,
+              "description": "MAC address on Linux, or the device UUID on macOS. Shown in the log on startup."
+            },
+            "name": { "title": "Name", "type": "string", "placeholder": "Garden Tap" },
+            "defaultDuration": {
+              "title": "Default watering duration (seconds)",
+              "type": "integer",
+              "default": 900,
+              "minimum": 60,
+              "maximum": 3600,
+              "description": "Used until you pick a duration in the Home app."
+            }
+          }
+        }
+      }
+    }
+  }
+}

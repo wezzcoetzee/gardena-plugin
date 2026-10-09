@@ -1,0 +1,16 @@
+{
+  "bridge": {
+    "name": "Gardena Dev Bridge",
+    "username": "0E:6A:52:D1:7C:01",
+    "port": 51830,
+    "pin": "031-45-154"
+  },
+  "platforms": [
+    {
+      "platform": "GardenaBluetooth",
+      "name": "Gardena Bluetooth",
+      "pollInterval": 60,
+      "devices": []
+    }
+  ]
+}
